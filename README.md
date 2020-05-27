@@ -24,8 +24,8 @@
 * 里面主要关注下面的部分代码，其中改为自己的数据库信息
 ```yaml
       url: jdbc:mysql://127.0.0.1:3306/YourDatabaseName?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-      username: root
-      password: "0412"
+      username: YourMysqlAccount
+      password: "YourMysqlPassword"
 ```
 
 ### 五、启动
