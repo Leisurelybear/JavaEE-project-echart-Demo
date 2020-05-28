@@ -3,14 +3,8 @@ package com.yzcz.server.mapper;
 import com.yzcz.server.model.MarkingInformation;
 import com.yzcz.server.model.MarkingInformationExample;
 import java.util.List;
-import org.apache.ibatis.annotations.DeleteProvider;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.UpdateProvider;
+
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
 public interface MarkingInformationMapper {
@@ -52,4 +46,11 @@ public interface MarkingInformationMapper {
 
     @UpdateProvider(type=MarkingInformationSqlProvider.class, method="updateByExample")
     int updateByExample(@Param("record") MarkingInformation record, @Param("example") MarkingInformationExample example);
+
+    @Select({
+            "SELECT mi.component_name ",
+            "FROM marking_information mi ",
+            "GROUP BY mi.component_name;"
+    })
+    List<String> getComponentNames();
 }

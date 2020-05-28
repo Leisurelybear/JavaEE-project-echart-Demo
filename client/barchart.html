@@ -135,20 +135,42 @@
             <!-- bar chart start -->
             <div class="row">
                 <div class="col-lg-6 mt-5">
-                    <div class="dropdown col-lg-6 col-md-4 col-sm-6">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"
-                                aria-expanded="false">
-                            component name
-                        </button>
-                        <div id="selection_1" class="dropdown-menu" x-placement="bottom-start"
-                             style="height:300px;overflow:auto;position: absolute; transform: translate3d(15px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
-
-                        </div>
-
-                    </div>
                     <div class="card">
                         <div class="card-body">
+                            <div class="dropdown col-lg-6 col-md-4 col-sm-6">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"
+                                        aria-expanded="false">
+                                    请选择成分名
+                                </button>
+                                <div id="selection_1" class="dropdown-menu" x-placement="bottom-start"
+                                     style="height:300px;overflow:auto;position: absolute; transform: translate3d(15px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+
+                                </div>
+
+                            </div>
+                            <p class="text-primary">成分：<b><em><span id="c_name_01"></span></em></b>-计算后的浓度图表：</p>
+
                             <div id="ambarchart1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="dropdown col-lg-6 col-md-4 col-sm-6">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"
+                                        aria-expanded="false">
+                                    请选择成分名
+                                </button>
+                                <div id="selection_2" class="dropdown-menu" x-placement="bottom-start"
+                                     style="height:300px;overflow:auto;position: absolute; transform: translate3d(15px, 43px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                </div>
+
+                            </div>
+                            <p class="text-primary">成分：<b><em><span id="c_name_02"></span></em></b>不同浓度的精确度图表：</p>
+
+                            <div id="amlinechart5"></div>
                         </div>
                     </div>
                 </div>
@@ -214,8 +236,26 @@
                 200: function (data) {
                     $("#selection_1").empty()
                     $(data).each(function (i, v) {
-                        str = "<a class='dropdown-item' onclick='mkChart_1(\""+v+"\")'>" + v + "</a>"
+                        str = "<a class='dropdown-item' onclick='mkChart_1(\"" + v + "\")'>" + v + "</a>"
                         $("#selection_1").append(str)
+
+                    })
+                }
+            }
+        })
+
+        $.ajax({
+
+            url: "http://localhost:8080/marking/getComponentNames",
+            dataType: "text json",
+            type: "get",
+            async: false,
+            statusCode: {
+                200: function (data) {
+                    $("#selection_2").empty()
+                    $(data).each(function (i, v) {
+                        str = "<a class='dropdown-item' onclick='mkChart_2(\"" + v + "\")'>" + v + "</a>"
+                        $("#selection_2").append(str)
 
                     })
                 }

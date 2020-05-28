@@ -188,26 +188,26 @@ if ($('#verview-shart').length) {
                 "alpha": 1
             }
         },
-        "plot": { "aspect": "spline" },
+        "plot": {"aspect": "spline"},
         "series": [{
-                "values": [20, 25, 30, 35, 45, 40, 40, 35, 25, 17, 40, 50],
-                "line-color": "#F0B41A",
-                /* "dotted" | "dashed" */
-                "line-width": 5 /* in pixels */ ,
-                "marker": { /* Marker object */
-                    "background-color": "#D79D3B",
-                    /* hexadecimal or RGB value */
-                    "size": 5,
-                    /* in pixels */
-                    "border-color": "#D79D3B",
-                    /* hexadecimal or RBG value */
-                }
-            },
+            "values": [20, 25, 30, 35, 45, 40, 40, 35, 25, 17, 40, 50],
+            "line-color": "#F0B41A",
+            /* "dotted" | "dashed" */
+            "line-width": 5 /* in pixels */,
+            "marker": { /* Marker object */
+                "background-color": "#D79D3B",
+                /* hexadecimal or RGB value */
+                "size": 5,
+                /* in pixels */
+                "border-color": "#D79D3B",
+                /* hexadecimal or RBG value */
+            }
+        },
             {
                 "values": [40, 45, 30, 20, 30, 35, 45, 55, 40, 30, 55, 30],
                 "line-color": "#0884D9",
                 /* "dotted" | "dashed" */
-                "line-width": 5 /* in pixels */ ,
+                "line-width": 5 /* in pixels */,
                 "marker": { /* Marker object */
                     "background-color": "#067dce",
                     /* hexadecimal or RGB value */
@@ -258,7 +258,7 @@ if ($('#mvaluechart').length) {
             },
             tooltips: {
                 callbacks: {
-                    label: function(tooltipItem) {
+                    label: function (tooltipItem) {
                         return tooltipItem.yLabel;
                     }
                 }
@@ -307,7 +307,7 @@ if ($('#mvaluechart2').length) {
             },
             tooltips: {
                 callbacks: {
-                    label: function(tooltipItem) {
+                    label: function (tooltipItem) {
                         return tooltipItem.yLabel;
                     }
                 }
@@ -356,7 +356,7 @@ if ($('#mvaluechart3').length) {
             },
             tooltips: {
                 callbacks: {
-                    label: function(tooltipItem) {
+                    label: function (tooltipItem) {
                         return tooltipItem.yLabel;
                     }
                 }
@@ -405,7 +405,7 @@ if ($('#mvaluechart4').length) {
             },
             tooltips: {
                 callbacks: {
-                    label: function(tooltipItem) {
+                    label: function (tooltipItem) {
                         return tooltipItem.yLabel;
                     }
                 }
@@ -447,11 +447,11 @@ if ($('#visitor_graph').length) {
             gridLineWidth: 1
         },
         series: [{
-                name: 'USD',
-                data: [400, 470, 520, 500, 420, 350, 320, 400, 550, 600, 500, 420, 400],
-                fillColor: 'rgba(76, 57, 249, 0.5)',
-                lineColor: 'transparent'
-            },
+            name: 'USD',
+            data: [400, 470, 520, 500, 420, 350, 320, 400, 550, 600, 500, 420, 400],
+            fillColor: 'rgba(76, 57, 249, 0.5)',
+            lineColor: 'transparent'
+        },
             {
                 name: 'BTC',
                 data: [450, 520, 550, 400, 450, 500, 400, 450, 500, 450, 400, 500, 450],
@@ -1062,109 +1062,103 @@ if ($('#amlinechart4').length) {
     });
 }
 /*-------------- 4 line chart amchart end ------------*/
+mkChart_2("")
 
-/*-------------- 5 line chart amchart start ------------*/
-if ($('#amlinechart5').length) {
-    var chart = AmCharts.makeChart("amlinechart5", {
-        "type": "serial",
-        "theme": "light",
-        "marginRight": 20,
-        "marginTop": 17,
-        "autoMarginOffset": 20,
-        "dataProvider": [{
-            "date": "2012-03-01",
-            "price": 20
-        }, {
-            "date": "2012-03-02",
-            "price": 75
-        }, {
-            "date": "2012-03-03",
-            "price": 15
-        }, {
-            "date": "2012-03-04",
-            "price": 75
-        }, {
-            "date": "2012-03-05",
-            "price": 158
-        }, {
-            "date": "2012-03-06",
-            "price": 57
-        }, {
-            "date": "2012-03-07",
-            "price": 107
-        }, {
-            "date": "2012-03-08",
-            "price": 89
-        }, {
-            "date": "2012-03-09",
-            "price": 75
-        }, {
-            "date": "2012-03-10",
-            "price": 132
-        }, {
-            "date": "2012-03-11",
-            "price": 158
-        }, {
-            "date": "2012-03-12",
-            "price": 56
-        }, {
-            "date": "2012-03-13",
-            "price": 169
-        }, {
-            "date": "2012-03-14",
-            "price": 24
-        }, {
-            "date": "2012-03-15",
-            "price": 147
-        }],
-        "valueAxes": [{
-            "logarithmic": true,
-            "dashLength": 1,
-            "guides": [{
-                "dashLength": 6,
-                "inside": true,
-                "label": "average",
-                "lineAlpha": 1,
-                "value": 90.4
-            }],
-            "position": "left"
-        }],
-        "graphs": [{
-            "bullet": "round",
-            "id": "g1",
-            "bulletBorderAlpha": 1,
-            "bulletColor": "#FFFFFF",
-            "bulletSize": 7,
-            "lineThickness": 2,
-            "title": "Price",
-            "type": "smoothedLine",
-            "useLineColorForBulletBorder": true,
-            "valueField": "price"
-        }],
-        "chartScrollbar": {},
-        "chartCursor": {
-            "valueLineEnabled": true,
-            "valueLineBalloonEnabled": true,
-            "valueLineAlpha": 0.5,
-            "fullWidth": true,
-            "cursorAlpha": 0.05
-        },
-        "dataDateFormat": "YYYY-MM-DD",
-        "categoryField": "date",
-        "categoryAxis": {
-            "parseDates": true
-        },
-        "export": {
-            "enabled": false
+function mkChart_2(componentName) {
+    if (componentName == null || componentName == "") {
+        componentName = "Ethylenediamine"
+    }
+
+    $("#c_name_02").html(componentName)
+
+    dat = []
+    $("#c_name_01").html(componentName)
+    $.ajax({
+
+        url: "http://localhost:8080/marking/querybyname/" + componentName,
+        dataType: "text json",
+        type: "get",
+        async: false,
+        statusCode: {
+            200: function (data) {
+                console.log(data)
+                $(data).each(function (i, v) {
+
+                    dat.push({
+                        "key": v.actualConcentration + " " + v.concUnits,
+                        "accuracy": v.accuracy
+                    })
+                })
+            }
         }
-    });
+    })
 
-    chart.addListener("dataUpdated", zoomChart);
+    if ($('#amlinechart5').length) {
+        var chart = AmCharts.makeChart("amlinechart5", {
+            "type": "serial",
+            "theme": "light",
+            "marginRight": 20,
+            "marginTop": 17,
+            "autoMarginOffset": 20,
+            "dataProvider":dat
+                /*[
+                    {
+                        "date": "2012-03-01",
+                        "price": 20
+                    }
+                ]*/,
+            "valueAxes": [{
+                "logarithmic": true,
+                "dashLength": 1,
+                "guides": [{
+                    "dashLength": 6,
+                    "inside": true,
+                    "label": "average",
+                    "lineAlpha": 1,
+                    "value": 90.4
+                }],
+                "position": "left"
+            }],
+            "graphs": [{
+                "bullet": "round",
+                "id": "g1",
+                "bulletBorderAlpha": 1,
+                "bulletColor": "#FFFFFF",
+                "bulletSize": 7,
+                "lineThickness": 2,
+                "title": "accuracy",
+                "type": "smoothedLine",
+                "useLineColorForBulletBorder": true,
+                "valueField": "accuracy"
+            }],
+            "chartScrollbar": {},
+            "chartCursor": {
+                "valueLineEnabled": true,
+                "valueLineBalloonEnabled": true,
+                "valueLineAlpha": 0.5,
+                "fullWidth": true,
+                "cursorAlpha": 0.05
+            },
+            // "dataDateFormat": "YYYY-MM-DD",
+            "categoryField": "key",
+            "categoryAxis": {
+                "parseDates": false
+            },
+            "export": {
+                "enabled": false
+            }
+        });
 
-    function zoomChart() {
-        chart.zoomToDates(new Date(2012, 2, 2), new Date(2012, 2, 10));
+        chart.addListener("dataUpdated", zoomChart);
+
+        function zoomChart() {
+            chart.zoomToDates(new Date(2012, 2, 2), new Date(2012, 2, 10));
+        }
     }
 }
+
+/*-------------- 5 line chart amchart start ------------*/
+
 /*-------------- 5 line chart amchart end ------------*/
 
 /*-------------- 6 line chart chartjs start ------------*/
@@ -2055,7 +2049,7 @@ if ($('#salesanalytic').length) {
             "title": "Sales",
             "position": "left",
             "autoGridCount": false,
-            "labelFunction": function(value) {
+            "labelFunction": function (value) {
                 return "$" + Math.round(value) + "M";
             }
         }, {

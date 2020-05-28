@@ -28,4 +28,12 @@ public class MarkingInformationController {
 
         return new ResponseEntity<>(json, HttpStatus.OK);
     }
+
+    @GetMapping("/getComponentNames")
+    public ResponseEntity<String> getComponentNames(){
+
+        String json = service.getComponentNames();
+
+        return new ResponseEntity<>(json, HttpStatus.OK);
+    }
 }

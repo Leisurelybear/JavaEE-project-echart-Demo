@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yzcz.server.mapper.MarkingInformationMapper;
 import com.yzcz.server.model.MarkingInformation;
 import com.yzcz.server.model.MarkingInformationExample;
+import com.yzcz.server.model.QuantitativeResultsExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -45,5 +46,14 @@ public class MarkingService {
 
         String json = JSONObject.toJSONString(list);
         return json;
+    }
+
+    public String getComponentNames() {
+
+        MarkingInformationExample example = new MarkingInformationExample();
+
+        List<String> list = markingDAO.getComponentNames();
+
+        return JSONObject.toJSONString(list);
     }
 }

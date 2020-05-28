@@ -24,9 +24,9 @@ public interface QuantitativeResultsMapper {
     int insert(QuantitativeResults record);
 
     @Select({
-            "SELECT mi.component_name ",
-            "FROM marking_information mi ",
-            "GROUP BY mi.component_name;"
+            "SELECT qr.component_name ",
+            "FROM quantitative_results qr ",
+            "GROUP BY qr.component_name;"
     })
     List<String> getComponentNames();
 

@@ -272,7 +272,7 @@ function mkChart_1(componentName) {
         componentName = "Ethylenediamine"
     }
     dat = []
-
+    $("#c_name_01").html(componentName)
     $.ajax({
 
         url: "http://localhost:8080/quantitative/querybyname/" + componentName,
