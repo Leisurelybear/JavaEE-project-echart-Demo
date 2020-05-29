@@ -1062,7 +1062,7 @@ if ($('#amlinechart4').length) {
     });
 }
 /*-------------- 4 line chart amchart end ------------*/
-mkChart_2("")
+/*mkChart_2("")
 
 function mkChart_2(componentName) {
     if (componentName == null || componentName == "") {
@@ -1101,12 +1101,12 @@ function mkChart_2(componentName) {
             "marginTop": 17,
             "autoMarginOffset": 20,
             "dataProvider":dat
-                /*[
+                /!*[
                     {
                         "date": "2012-03-01",
                         "price": 20
                     }
-                ]*/,
+                ]*!/,
             "valueAxes": [{
                 "logarithmic": true,
                 "dashLength": 1,
@@ -1155,7 +1155,7 @@ function mkChart_2(componentName) {
             chart.zoomToDates(new Date(2012, 2, 2), new Date(2012, 2, 10));
         }
     }
-}
+}*/
 
 /*-------------- 5 line chart amchart start ------------*/
 

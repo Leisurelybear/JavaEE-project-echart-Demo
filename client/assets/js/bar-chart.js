@@ -263,7 +263,7 @@ if ($('#coin_sales7').length) {
 /*--------------  bar chart 08 amchart start ------------*/
 
 //javaEE j2ee  01
-if ($('#ambarchart1').length) {
+/*if ($('#ambarchart1').length) {
     mkChart_1("")
 
 }
@@ -333,8 +333,8 @@ function mkChart_1(componentName) {
 }
 
 
-/*--------------  bar chart 08 amchart END ------------*/
-/*--------------  bar chart 09 amchart start ------------*/
+/!*--------------  bar chart 08 amchart END ------------*!/
+/!*--------------  bar chart 09 amchart start ------------*!/
 if ($('#ambarchart2').length) {
     var chart = AmCharts.makeChart("ambarchart2", {
         "type": "serial",
@@ -427,7 +427,7 @@ if ($('#ambarchart2').length) {
             "enabled": false
         }
     });
-}
+}*/
 
 /*--------------  bar chart 09 amchart END ------------*/
 /*--------------  bar chart 10 amchart start ------------*/
