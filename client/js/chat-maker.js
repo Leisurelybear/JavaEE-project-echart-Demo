@@ -13,9 +13,10 @@ function mkChart_1(componentName) {
     $("#c_name_01").html(componentName)
     $.ajax({
 
-        url: "http://localhost:8080/quantitative/querybyname/" + componentName,
+        url: "http://localhost:8080/quantitative/querybyname",
         dataType: "text json",
-        type: "get",
+        data:"componentName=" + componentName,
+        type: "post",
         async:false,
         statusCode: {
             200: function (data) {
@@ -87,9 +88,10 @@ function mkChart_2(componentName) {
     $("#c_name_01").html(componentName)
     $.ajax({
 
-        url: "http://localhost:8080/marking/querybyname/" + componentName,
+        url: "http://localhost:8080/marking/querybyname",
         dataType: "text json",
-        type: "get",
+        data:"componentName=" + componentName,
+        type: "post",
         async: false,
         statusCode: {
             200: function (data) {

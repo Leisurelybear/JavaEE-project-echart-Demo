@@ -21,8 +21,8 @@ public class MarkingInformationController {
     @Autowired
     private MarkingService service;
 
-    @GetMapping("/querybyname/{componentName}")
-    public ResponseEntity<String> query(@PathVariable String componentName){
+    @PostMapping("/querybyname")
+    public ResponseEntity<String> query(@RequestParam String componentName){
 
         String json = service.querybyname(componentName);
 

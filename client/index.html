@@ -256,7 +256,7 @@
                 200: function (data) {
                     $("#selection_2").empty()
                     $(data).each(function (i, v) {
-                        str = "<a class='dropdown-item' onclick='mkChart_2(" + v.toString() + ")'>" + v + "</a>"
+                        str = "<a class='dropdown-item' onclick='mkChart_2(\"" + v.toString() + "\")'>" + v + "</a>"
                         $("#selection_2").append(str)
 
                     })
