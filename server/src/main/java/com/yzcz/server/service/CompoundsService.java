@@ -22,9 +22,8 @@ public class CompoundsService {
     private CompoundsMapper dao;
     public String getItems(Integer page, Integer num, String like) {
         //分页查询，未完成
-        CompoundsExample example = new CompoundsExample();
-        example.createCriteria().andEnglishNameIsNotNull();
-        List<Compounds> list = dao.selectByExample(example);
+        //SELECT * FROM compounds LIMIT 0,10;
+        List<Compounds> list = dao.getItems(page, num, like);
         return JSONObject.toJSONString(list);
 
 

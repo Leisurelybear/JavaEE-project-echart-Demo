@@ -29,6 +29,9 @@
     <link rel="stylesheet" href="../assets/css/responsive.css">
     <!-- modernizr css -->
     <script src="../assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <style type="text/css">
+
+    </style>
 </head>
 
 <body>
@@ -68,8 +71,8 @@
                             <a href="javascript:void(0)" aria-expanded="true"><i
                                     class="ti-pie-chart"></i><span>Charts</span></a>
                             <ul class="collapse">
-                                <li class="active"><a href="index.html">数据统计图概览</a></li>
-                                <li><a href="table01.html">数据表格</a></li>
+                                <li><a href="index.html">数据统计图概览</a></li>
+                                <li class="active"><a href="table01.html">数据表格</a></li>
                                 <li><a href="#">pie chart</a></li>
                             </ul>
                         </li>
@@ -276,43 +279,91 @@
                 </div>
             </div>
         </div>
-        <!-- page title area end -->
-        <div class="main-content-inner">
-            <div class="row">
-                <!-- Dark table start -->
-                <div class="col-12 mt-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="header-title">Data Table Dark</h4>
-                            <div class="data-tables datatable-dark">
-                                <table id="dataTable3" class="text-center">
-                                    <thead class="text-capitalize">
-                                    <tr>
-                                        <th>序号</th>
-                                        <th>中文名</th>
-                                        <th>英文名</th>
-                                        <th>种类</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="tb_01">
 
-                                    </tbody>
-                                </table>
-                            </div>
+
+
+
+        <!-- Hoverable Rows Table start -->
+        <div class="col-lg-6 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">成分数据表格</h4>
+                    <div class="single-table">
+                        <div class="header-area">
+                            每页展示
+                            <select class="custom-select-sm" id="select_num">
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+
+                            </select>
+                            条数据
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover text-center">
+                                <thead class="text-uppercase">
+                                <tr>
+                                    <th>序号</th>
+                                    <th>中文名</th>
+                                    <th>英文名</th>
+                                    <th>种类</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tb_01">
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>09 / 07 / 2018</td>
+                                    <td>$120</td>
+                                    <td><i class="ti-trash"></i></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>jone</td>
+                                    <td>09 / 07 / 2018</td>
+                                    <td>$150</td>
+                                    <td><i class="ti-trash"></i></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>09 / 07 / 2018</td>
+                                    <td>$120</td>
+                                    <td><i class="ti-trash"></i></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>jone</td>
+                                    <td>09 / 07 / 2018</td>
+                                    <td>$150</td>
+                                    <td><i class="ti-trash"></i></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center">
+                            <input class="btn btn-flat btn-outline-primary mb-3" type="button" value="上一页" id="btn_pre">
+                            <span class="">当前是第<b id="tb_page">1</b>页</span>
+                            <input class="btn btn-flat btn-outline-primary mb-3" type="button" value="下一页" id="btn_next">
+
                         </div>
                     </div>
                 </div>
-                <!-- Dark table end -->
             </div>
         </div>
+        <!-- Hoverable Rows Table end -->
+
+
+
+
+
     </div>
     <!-- main content area end -->
     <!-- footer area start-->
     <footer>
         <div class="footer-area">
-            <p>Copyright &copy; 2020.Company name All rights reserved.<a target="_blank"
-                                                                         href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
-            </p>
         </div>
     </footer>
     <!-- footer area end-->
@@ -500,10 +551,50 @@
 <script src="../assets/js/vendor/jquery-2.2.4.min.js"></script>
 <script>
     $(function () {
-        showDatas(0, 10, "")
+        $("#btn_next").removeClass("disabled")
+        $("#btn_pre").removeClass("disabled")
+
+        page = 0
+        num = 10
+        like = ""
+        showData(page, num, like)
+
+        document.getElementById("select_num").onchange = function (ev) {
+            page = 0
+            num = $("#select_num option:selected").val()
+            showData(page, num, like)
+        }
+
+
+        document.getElementById("btn_next").onclick = function () {
+            if (isLast){
+                alert("当前是最后一页！")
+                return
+            }
+            page += 1
+            showData(page, num, like)
+            if (page > 0){
+                $("#btn_pre").removeClass("disabled")
+            }else {
+                $("#btn_pre").addClass("disabled");
+            }
+        }
+
+        document.getElementById("btn_pre").onclick = function () {
+            if (page == 0){
+                return
+            }
+            page -= 1
+            showData(page, num, like)
+        }
+
+
     })
 
-    function showDatas(page, num, like) {
+
+
+
+    function showData(page, num, like) {
         //tb_01
         $.ajax({
             url: "http://localhost:8080/compounds/getItems",
@@ -523,6 +614,19 @@
                             "</tr>"
                         $("#tb_01").append(str)
                     })
+                    if (page > 0){
+                        $("#btn_pre").removeClass("disabled")
+                    }else {
+                        $("#btn_pre").addClass("disabled");
+                    }
+                    console.log($(data).length)
+                    if ($(data).length < num){
+                        isLast = true
+                    } else {
+                        isLast = false
+                    }
+
+                    $("#tb_page").text(page + 1)
                 }
             }
         })
@@ -537,8 +641,8 @@
 <script src="../assets/js/jquery.slicknav.min.js"></script>
 
 <!-- Start datatable js -->
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<!--<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
+<script src="./js/table.js"></script>
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>

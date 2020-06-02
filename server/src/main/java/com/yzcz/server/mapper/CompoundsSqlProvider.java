@@ -10,6 +10,13 @@ import org.apache.ibatis.jdbc.SQL;
 
 public class CompoundsSqlProvider {
 
+    public String getItems(Integer page, Integer num, String like){
+        SQL sql = new SQL();
+        sql.SELECT("*").FROM("compounds")
+                .LIMIT((page * num) + ", " + num);
+        return sql.toString();
+    }
+
     public String countByExample(CompoundsExample example) {
         SQL sql = new SQL();
         sql.SELECT("count(*)").FROM("compounds");

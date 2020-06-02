@@ -1,5 +1,5 @@
 
-//图表2
+//图表1
 if ($('#ambarchart1').length) {
     mkChart_1("")
 
