@@ -1,5 +1,29 @@
 ## JavaEE 实践作业（建议使用idea来导入项目）
 
+
+### 
+* Spring ->简化开发-> [Spring boot]
+
+* springboot内置tomcat（服务器）
+简化了servlet
+
+
+jsp：前后端不分离，java view resolver （数据 -> html片段）
+本项目：前后端分离（
+    java 后端 查询 处理 数据
+    -> json
+    -> 前端
+    -> js来展示数据，而不是html
+）
+
+数据库：
+X hibernate：
+X 直接操作
+√ MyBatis 操作数据库的orm框架 来操作数据库
+
+
+
+
 ### 一、SQL文件
 * 位置： **JavaEE-project/SQL**
 * 使用时候把里面的.sql文件导入到自己的数据库

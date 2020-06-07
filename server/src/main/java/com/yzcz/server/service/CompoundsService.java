@@ -28,4 +28,8 @@ public class CompoundsService {
 
 
     }
+
+    public void del(Compounds c) {
+
+    }
 }

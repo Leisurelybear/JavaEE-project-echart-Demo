@@ -281,8 +281,6 @@
         </div>
 
 
-
-
         <!-- Hoverable Rows Table start -->
         <div class="col-lg-6 mt-5">
             <div class="card">
@@ -308,7 +306,7 @@
                                     <th>中文名</th>
                                     <th>英文名</th>
                                     <th>种类</th>
-                                    <th>操作</th>
+                                    <th colspan="2">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody id="tb_01">
@@ -346,7 +344,8 @@
                         <div class="text-center">
                             <input class="btn btn-flat btn-outline-primary mb-3" type="button" value="上一页" id="btn_pre">
                             <span class="">当前是第<b id="tb_page">1</b>页</span>
-                            <input class="btn btn-flat btn-outline-primary mb-3" type="button" value="下一页" id="btn_next">
+                            <input class="btn btn-flat btn-outline-primary mb-3" type="button" value="下一页"
+                                   id="btn_next">
 
                         </div>
                     </div>
@@ -354,9 +353,6 @@
             </div>
         </div>
         <!-- Hoverable Rows Table end -->
-
-
-
 
 
     </div>
@@ -567,21 +563,21 @@
 
 
         document.getElementById("btn_next").onclick = function () {
-            if (isLast){
+            if (isLast) {
                 alert("当前是最后一页！")
                 return
             }
             page += 1
             showData(page, num, like)
-            if (page > 0){
+            if (page > 0) {
                 $("#btn_pre").removeClass("disabled")
-            }else {
+            } else {
                 $("#btn_pre").addClass("disabled");
             }
         }
 
         document.getElementById("btn_pre").onclick = function () {
-            if (page == 0){
+            if (page == 0) {
                 return
             }
             page -= 1
@@ -590,8 +586,6 @@
 
 
     })
-
-
 
 
     function showData(page, num, like) {
@@ -611,22 +605,43 @@
                             "<td>" + v.chineseName + "</td>" +
                             "<td>" + v.englishName + "</td>" +
                             "<td>" + v.types + "</td>" +
-                            "</tr>"
+                            "<td>" +
+                            "<button type='button' class='btn btn-flat btn-outline-success mb-3'>编辑</button>" +
+                            "<button type='button' class='btn btn-flat btn-outline-danger mb-3' onclick='del(" + JSON.stringify(v) + ")'>删除</button>" +
+                            "</td>"
+                        "</tr>"
+                        //table
                         $("#tb_01").append(str)
                     })
-                    if (page > 0){
+                    if (page > 0) {
                         $("#btn_pre").removeClass("disabled")
-                    }else {
+                    } else {
                         $("#btn_pre").addClass("disabled");
                     }
                     console.log($(data).length)
-                    if ($(data).length < num){
+                    if ($(data).length < num) {
                         isLast = true
                     } else {
                         isLast = false
                     }
 
                     $("#tb_page").text(page + 1)
+                }
+            }
+        })
+    }
+
+    function del(comp) {
+        $.ajax({
+            url: "http://localhost:8080/compounds/del",
+            dataType: "text json",
+            data: comp,
+            type: "delete",
+            contentType: "application/json",
+            async: false,
+            statusCode: {
+                200: function (data) {
+                    showData(page, num, like)
                 }
             }
         })

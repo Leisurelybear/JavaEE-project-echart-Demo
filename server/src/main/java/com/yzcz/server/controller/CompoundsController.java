@@ -7,6 +7,7 @@
 package com.yzcz.server.controller;
 
 
+import com.yzcz.server.model.Compounds;
 import com.yzcz.server.service.CompoundsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,13 @@ public class CompoundsController {
 
         return new ResponseEntity<>(json, HttpStatus.OK);
 
+    }
+
+    @DeleteMapping("/del")
+    public ResponseEntity<String> del(@RequestBody Compounds c){
+        System.out.println(c);
+        service.del(c);
+        return new ResponseEntity<>("true", HttpStatus.OK);
     }
 
 
