@@ -42,5 +42,17 @@ public class CompoundsController {
         return new ResponseEntity<>("true", HttpStatus.OK);
     }
 
+    @PutMapping("/save")
+    public ResponseEntity<String> save(@RequestBody(required = false) Compounds[] cs){
+
+        if (cs == null || cs.length != 2){
+            return new ResponseEntity<>("false", HttpStatus.OK);
+        }
+        service.save(cs[0], cs[1]);
+
+        return new ResponseEntity<>("true", HttpStatus.OK);
+
+    }
+
 
 }

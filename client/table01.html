@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>数据表格</title>
+    <title>成分表</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -71,8 +71,8 @@
                             <a href="javascript:void(0)" aria-expanded="true"><i
                                     class="ti-pie-chart"></i><span>Charts</span></a>
                             <ul class="collapse">
-                                <li><a href="index.html">数据统计图概览</a></li>
-                                <li class="active"><a href="table01.html">数据表格</a></li>
+                                <li><a href="index.html">实验数据统计图/浓度折线图概览</a></li>
+                                <li class="active"><a href="table01.html">成分表</a></li>
                                 <li><a href="#">pie chart</a></li>
                             </ul>
                         </li>
@@ -297,6 +297,7 @@
 
                             </select>
                             条数据
+                            <button type='button' onclick="startAdd()" class='btn btn-flat btn-outline-primary mb-3'>添加化合物</button>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover text-center">
@@ -588,6 +589,28 @@
     })
     isEditing = false
 
+    function startAdd() {
+        if (isEditing) {
+            alert("请先保存正在编辑的条目！")
+            return
+        }
+        isEditing = true
+
+        str = "<tr>" +
+            "<td></td>" +
+            "<td><input type='text' id='cname' name='cname' value=''></td>" +
+            "<td><input type='text' id='ename' name='ename' value=''></td>" +
+            "<td><input type='text' id='tp' name='tp' value=''></td>" +
+            "<td>" +
+            "<button type='button' class='btn btn-flat btn-outline-success mb-3' onclick='add()'>添加</button>" +
+            "</td>"
+        "</tr>"
+        tmp = document.getElementById("tb_01").innerHTML
+        console.log(tmp)
+        $("#tb_01").empty()
+        $("#tb_01").append(str)
+        $("#tb_01").append(tmp)
+    }
 
     function showData(page, num, like) {
         //tb_01
@@ -608,7 +631,7 @@
                             "<td>" + v.englishName + "</td>" +
                             "<td>" + v.types + "</td>" +
                             "<td>" +
-                            "<button type='button' class='btn btn-flat btn-outline-success mb-3' onclick='edit(" + JSON.stringify(v) + ")'>编辑</button>" +
+                            "<button type='button' class='btn btn-flat btn-outline-success mb-3' onclick='edit(" + JSON.stringify(v) + ", this.parentNode.parentNode)'>编辑</button>" +
                             "<button type='button' class='btn btn-flat btn-outline-danger mb-3' onclick='del(" + JSON.stringify(v) + ")'>删除</button>" +
                             "</td>"
                         "</tr>"
@@ -633,7 +656,72 @@
         })
     }
 
-    function del(comp) {
+    var currentObject = null
+
+    function edit(comp, tr) {
+        if (isEditing) {
+            alert("请先保存正在编辑的条目！")
+            return
+        }
+        isEditing = true
+        currentObject = comp
+
+        tds = tr.childNodes
+
+        tds[1].innerHTML = "<input type='text' id='ch_name' name='ch_name' value='" + tds[1].innerText + "'>"
+        tds[2].innerHTML = "<input type='text' id='en_name' name='en_name' value='" + tds[2].innerText + "'>"
+        tds[3].innerHTML = "<input type='text' id='types' name='types' value='" + tds[3].innerText + "'>"
+        tds[4].innerHTML = "<button type='button' class='btn btn-flat btn-outline-secondary mb-3' onclick='save()'>保存</button>"
+
+
+    }
+
+    function save() {
+        if (currentObject == null) {
+            showData(page, num, like)
+            return
+        }
+        oldJson = currentObject
+
+        ch_name = $("#ch_name").val()
+        en_name = $("#en_name").val()
+        types = $("#types").val()
+
+        newJson = {
+            "chineseName": ch_name,
+            "englishName": en_name,
+            "types": types
+        }
+        json = [
+                oldJson, newJson
+            ]
+
+
+        console.log(json)
+
+        $.ajax({
+            url: "http://localhost:8080/compounds/save",
+            dataType: "text",
+            data: JSON.stringify(json),
+            type: "put",
+            contentType: "application/json",
+            async: false,
+            statusCode: {
+                200: function (data) {
+                    console.log(data)
+                    currentObject = null
+                    isEditing = false
+                }
+            }
+        })
+
+        currentObject = null
+        isEditing = false
+        showData(page, num, like)
+    }
+
+
+    function del(comp,) {
         $.ajax({
             url: "http://localhost:8080/compounds/del",
             dataType: "text json",

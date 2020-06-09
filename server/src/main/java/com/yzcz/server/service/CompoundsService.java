@@ -37,4 +37,13 @@ public class CompoundsService {
                 .andTypesEqualTo(c.getTypes());
         dao.deleteByExample(example);
     }
+
+    public void save(Compounds oldComp, Compounds newComp) {
+        CompoundsExample example = new CompoundsExample();
+        example.createCriteria()
+                .andChineseNameEqualTo(oldComp.getChineseName())
+                .andEnglishNameEqualTo(oldComp.getEnglishName())
+                .andTypesEqualTo(oldComp.getTypes());
+        dao.updateByExampleSelective(newComp, example);
+    }
 }
