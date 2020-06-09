@@ -36,7 +36,7 @@ public class CompoundsController {
     }
 
     @DeleteMapping("/del")
-    public ResponseEntity<String> del(@RequestBody Compounds c){
+    public ResponseEntity<String> del(@RequestBody(required = false) Compounds c){
         System.out.println(c);
         service.del(c);
         return new ResponseEntity<>("true", HttpStatus.OK);

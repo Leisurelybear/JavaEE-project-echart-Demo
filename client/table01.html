@@ -586,6 +586,7 @@
 
 
     })
+    isEditing = false
 
 
     function showData(page, num, like) {
@@ -598,6 +599,7 @@
             async: false,
             statusCode: {
                 200: function (data) {
+                    isEditing = false
                     $("#tb_01").empty()
                     $(data).each(function (i, v) {
                         str = "<tr>" +
@@ -606,7 +608,7 @@
                             "<td>" + v.englishName + "</td>" +
                             "<td>" + v.types + "</td>" +
                             "<td>" +
-                            "<button type='button' class='btn btn-flat btn-outline-success mb-3'>编辑</button>" +
+                            "<button type='button' class='btn btn-flat btn-outline-success mb-3' onclick='edit(" + JSON.stringify(v) + ")'>编辑</button>" +
                             "<button type='button' class='btn btn-flat btn-outline-danger mb-3' onclick='del(" + JSON.stringify(v) + ")'>删除</button>" +
                             "</td>"
                         "</tr>"
@@ -635,12 +637,13 @@
         $.ajax({
             url: "http://localhost:8080/compounds/del",
             dataType: "text json",
-            data: comp,
+            data: JSON.stringify(comp),
             type: "delete",
             contentType: "application/json",
             async: false,
             statusCode: {
                 200: function (data) {
+                    console.log(data)
                     showData(page, num, like)
                 }
             }

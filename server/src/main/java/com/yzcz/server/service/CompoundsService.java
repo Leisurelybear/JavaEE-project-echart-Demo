@@ -30,6 +30,11 @@ public class CompoundsService {
     }
 
     public void del(Compounds c) {
-
+        CompoundsExample example = new CompoundsExample();
+        example.createCriteria()
+                .andChineseNameEqualTo(c.getChineseName())
+                .andEnglishNameEqualTo(c.getEnglishName())
+                .andTypesEqualTo(c.getTypes());
+        dao.deleteByExample(example);
     }
 }
