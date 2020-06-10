@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>成分表</title>
+    <title>实验数据表</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="../assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -72,8 +72,8 @@
                                     class="ti-pie-chart"></i><span>Charts</span></a>
                             <ul class="collapse">
                                 <li><a href="index.html">实验数据统计图/浓度折线图概览</a></li>
-                                <li class="active"><a href="table_compounds.html">成分表</a></li>
-                                <li><a href="experiment.html">实验数据表</a></li>
+                                <li><a href="table_compounds.html">成分表</a></li>
+                                <li class="active"><a href="experiment.html">实验数据表</a></li>
                             </ul>
                         </li>
 
@@ -297,21 +297,32 @@
 
                             </select>
                             条数据
-                            <button type='button' onclick="startAdd()" class='btn btn-flat btn-outline-primary mb-3 float-right'>添加化合物</button>
+
+                            <br/><br/>
+                            <input class='form-control' placeholder="tip：内容为空时，可搜索全部数据。" type='text' id='search' name='search' value=''>
+                            <button type='button' onclick="startAdd()" class='btn btn-flat btn-outline-primary mb-3 '>
+                                添加实验数据
+                            </button>
+                            <button type='button' onclick="searchData(0, 999, $('#search').val())" class='btn btn-flat btn-outline-primary mb-3 float-right'>
+                                检索化合物名
+                            </button>
+
+
+
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover text-center">
                                 <thead class="text-uppercase">
                                 <tr>
                                     <th>序号</th>
-                                    <th>中文名</th>
-                                    <th>英文名</th>
-                                    <th>种类</th>
+                                    <th>化合物名</th>
+                                    <th>实验ID</th>
+                                    <th>实验值</th>
                                     <th colspan="2">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody id="tb_01">
-                                <!--展示数据-->
+                                <!--里面展示数据-->
                                 </tbody>
                             </table>
                         </div>
@@ -571,9 +582,9 @@
 
         str = "<tr>" +
             "<td></td>" +
-            "<td><input class='form-control' type='text' id='cname' name='cname' value=''></td>" +
-            "<td><input class='form-control' type='text' id='ename' name='ename' value=''></td>" +
-            "<td><input class='form-control' type='text' id='tp' name='tp' value=''></td>" +
+            "<td><input class='form-control' type='text' id='add_name' name='add_name' value=''></td>" +
+            "<td><input class='form-control' type='text' id='add_testid' name='add_testid' value=''></td>" +
+            "<td><input class='form-control' type='text' id='add_value' name='add_value' value=''></td>" +
             "<td>" +
             "<button type='button' class='btn btn-flat btn-outline-warning mb-3' onclick='addItem()'>添加</button>" +
             "<button type='button' class='btn btn-flat btn-outline-secondary mb-3' onclick='showData(page, num, )'>取消</button>" +
@@ -589,17 +600,17 @@
     function addItem() {
 
         experiment = {
-            "chineseName":$("#cname").val(),
-            "englishName":$("#ename").val(),
-            "types":$("#tp").val(),
+            "name": $("#add_name").val(),
+            "testId": $("#add_testid").val(),
+            "value": $("#add_value").val(),
         }
-        if (experiment.chineseName == "" || experiment.englishName == "" || experiment.types == ""){
+        if (experiment.name == "" || experiment.testId == "" || experiment.value == "") {
             alert("编辑框内容不能为空！")
             return
         }
 
         $.ajax({
-            url: "http://localhost:8080/compounds/add",
+            url: "http://localhost:8080/experiment/add",
             dataType: "text",
             data: JSON.stringify(experiment),
             type: "post",
@@ -618,13 +629,22 @@
 
     }
 
+    function searchData(page, num, like) {
+        if (like == ""){
+            page = 0
+            num = 10
+            like = ""
+        }
+        showData(page, num, like)
+
+    }
     function showData(page, num, like) {
         if (typeof like == "undefined" || like == null){
             like = ""
         }
         //tb_01
         $.ajax({
-            url: "http://localhost:8080/compounds/getItems",
+            url: "http://localhost:8080/experiment/getItems",
             dataType: "text json",
             data: "page=" + page + "&num=" + num + "&like=" + like,
             type: "get",
@@ -633,14 +653,15 @@
                 200: function (data) {
                     isEditing = false
                     $("#tb_01").empty()
+                    console.log(data)
                     $(data).each(function (i, v) {
                         str = "<tr>" +
                             "<td>" + (page * num + i + 1) + "</td>" +
-                            "<td>" + v.chineseName + "</td>" +
-                            "<td>" + v.englishName + "</td>" +
-                            "<td>" + v.types + "</td>" +
+                            "<td>" + v.name + "</td>" +
+                            "<td>" + v.testId + "</td>" +
+                            "<td>" + v.value + "</td>" +
                             "<td>" +
-                            "<button type='button' class='btn btn-flat btn-outline-success mb-3' onclick='edit(" + JSON.stringify(v) + ", this.parentNode.parentNode)'>编辑</button>" +
+                            "<button type='button' class='btn btn-flat btn-outline-success mb-3' onclick='edit(" + JSON.stringify(v) + ", this.parentNode.parentNode," + v.id + ")'>编辑</button>" +
                             "<button type='button' class='btn btn-flat btn-outline-danger mb-3' onclick='del(" + JSON.stringify(v) + ")'>删除</button>" +
                             "</td>"
                         "</tr>"
@@ -667,57 +688,58 @@
 
     var currentObject = null
 
-    function edit(comp, tr) {
+    function edit(e, tr, id) {
         if (isEditing) {
             alert("请先保存正在编辑的条目！")
             return
         }
         isEditing = true
-        currentObject = experiment
+        currentObject = e
 
         tds = tr.childNodes
 
-        tds[1].innerHTML = "<input class='form-control' type='text' id='ch_name' name='ch_name' value='" + tds[1].innerText + "'>"
-        tds[2].innerHTML = "<input class='form-control' type='text' id='en_name' name='en_name' value='" + tds[2].innerText + "'>"
-        tds[3].innerHTML = "<input class='form-control' type='text' id='types' name='types' value='" + tds[3].innerText + "'>"
-        tds[4].innerHTML = "<button type='button' class='btn btn-flat btn-outline-warning mb-3' onclick='save()'>保存</button>" +
+        tds[1].innerHTML = "<input class='form-control' type='text' id='e_name' name='e_name' value='" + tds[1].innerText + "'>"
+        tds[2].innerHTML = "<input class='form-control' type='text' id='testId' name='testId' value='" + tds[2].innerText + "'>"
+        tds[3].innerHTML = "<input class='form-control' type='text' id='value' name='value' value='" + tds[3].innerText + "'>"
+        tds[4].innerHTML = "<button type='button' class='btn btn-flat btn-outline-warning mb-3' onclick='save(" + id + ")'>保存</button>" +
             "<button type='button' class='btn btn-flat btn-outline-secondary mb-3' onclick='showData(page, num, like)'>取消</button>"
-
 
 
     }
 
-    function save() {
+    function save(id) {
         if (currentObject == null) {
             showData(page, num, like)
             return
         }
         oldJson = currentObject
 
-        ch_name = $("#ch_name").val()
-        en_name = $("#en_name").val()
-        types = $("#types").val()
+        e_id = id
+        e_name = $("#e_name").val()
+        testId = $("#testId").val()
+        value = $("#value").val()
 
         newJson = {
-            "chineseName": ch_name,
-            "englishName": en_name,
-            "types": types
+            "id": e_id,
+            "name": e_name,
+            "testId": testId,
+            "value": value
         }
 
-        if (newJson.chineseName == "" || newJson.englishName == "" || newJson.types == ""){
+        if (newJson.name == "" || newJson.testId == "" || newJson.value == "") {
             alert("编辑框内容不能为空！")
             return
         }
 
         json = [
-                oldJson, newJson
+            oldJson, newJson
         ]
 
 
         console.log(json)
 
         $.ajax({
-            url: "http://localhost:8080/compounds/save",
+            url: "http://localhost:8080/experiment/save",
             dataType: "text",
             data: JSON.stringify(json),
             type: "put",
@@ -738,11 +760,11 @@
     }
 
 
-    function del(comp,) {
+    function del(e) {
         $.ajax({
-            url: "http://localhost:8080/compounds/del",
+            url: "http://localhost:8080/experiment/del",
             dataType: "text json",
-            data: JSON.stringify(experiment),
+            data: JSON.stringify(e),
             type: "delete",
             contentType: "application/json",
             async: false,

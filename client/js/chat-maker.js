@@ -11,6 +11,8 @@ function mkChart_1(componentName) {
     }
     dat = []
     $("#c_name_01").html(componentName)
+    $("#c_name_01_1").html(componentName)
+
     $.ajax({
 
         url: "http://localhost:8080/quantitative/querybyname",
@@ -81,11 +83,11 @@ function mkChart_2(componentName) {
     if (componentName == null || componentName == "") {
         componentName = "Ethylenediamine"
     }
+    dat = []
 
     $("#c_name_02").html(componentName)
+    $("#c_name_02_2").html(componentName)
 
-    dat = []
-    $("#c_name_01").html(componentName)
     $.ajax({
 
         url: "http://localhost:8080/marking/querybyname",
@@ -97,7 +99,6 @@ function mkChart_2(componentName) {
             200: function (data) {
                 console.log(data)
                 $(data).each(function (i, v) {
-
                     dat.push({
                         "key": v.actualConcentration + " " + v.concUnits,
                         "accuracy": v.accuracy

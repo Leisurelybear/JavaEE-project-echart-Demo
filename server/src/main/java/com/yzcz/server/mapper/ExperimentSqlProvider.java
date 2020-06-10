@@ -1,116 +1,150 @@
 package com.yzcz.server.mapper;
 
-import com.yzcz.server.model.Compounds;
-import com.yzcz.server.model.CompoundsExample.Criteria;
-import com.yzcz.server.model.CompoundsExample.Criterion;
-import com.yzcz.server.model.CompoundsExample;
+import com.yzcz.server.model.Experiment;
+import com.yzcz.server.model.ExperimentExample.Criteria;
+import com.yzcz.server.model.ExperimentExample.Criterion;
+import com.yzcz.server.model.ExperimentExample;
+
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.jdbc.SQL;
 
-public class CompoundsSqlProvider {
+public class ExperimentSqlProvider {
 
-    public String getItems(Integer page, Integer num, String like){
+
+    public String getItems(Integer page, Integer num, String like) {
         SQL sql = new SQL();
-        sql.SELECT("*").FROM("compounds")
-                .WHERE("chinese_name like \"%" + like + "%\"")
+        sql.SELECT("*").FROM("experiment")
+                .WHERE("name like \"%" + like + "%\"")
                 .LIMIT((page * num) + ", " + num);
         return sql.toString();
     }
 
-    public String countByExample(CompoundsExample example) {
+    public String countByExample(ExperimentExample example) {
         SQL sql = new SQL();
-        sql.SELECT("count(*)").FROM("compounds");
+        sql.SELECT("count(*)").FROM("experiment");
         applyWhere(sql, example, false);
         return sql.toString();
     }
 
-    public String deleteByExample(CompoundsExample example) {
+    public String deleteByExample(ExperimentExample example) {
         SQL sql = new SQL();
-        sql.DELETE_FROM("compounds");
+        sql.DELETE_FROM("experiment");
         applyWhere(sql, example, false);
         return sql.toString();
     }
 
-    public String insertSelective(Compounds record) {
+    public String insertSelective(Experiment record) {
         SQL sql = new SQL();
-        sql.INSERT_INTO("compounds");
-        
-        if (record.getEnglishName() != null) {
-            sql.VALUES("english_name", "#{englishName,jdbcType=VARCHAR}");
+        sql.INSERT_INTO("experiment");
+
+        if (record.getId() != null) {
+            sql.VALUES("id", "#{id,jdbcType=INTEGER}");
         }
-        
-        if (record.getChineseName() != null) {
-            sql.VALUES("chinese_name", "#{chineseName,jdbcType=VARCHAR}");
+
+        if (record.getName() != null) {
+            sql.VALUES("name", "#{name,jdbcType=VARCHAR}");
         }
-        
-        if (record.getTypes() != null) {
-            sql.VALUES("types", "#{types,jdbcType=VARCHAR}");
+
+        if (record.getTestId() != null) {
+            sql.VALUES("test_id", "#{testId,jdbcType=VARCHAR}");
         }
-        
+
+        if (record.getValue() != null) {
+            sql.VALUES("value", "#{value,jdbcType=VARCHAR}");
+        }
+
         return sql.toString();
     }
 
-    public String selectByExample(CompoundsExample example) {
+    public String selectByExample(ExperimentExample example) {
         SQL sql = new SQL();
         if (example != null && example.isDistinct()) {
-            sql.SELECT_DISTINCT("english_name");
+            sql.SELECT_DISTINCT("id");
         } else {
-            sql.SELECT("english_name");
+            sql.SELECT("id");
         }
-        sql.SELECT("chinese_name");
-        sql.SELECT("types");
-        sql.FROM("compounds");
+        sql.SELECT("name");
+        sql.SELECT("test_id");
+        sql.SELECT("value");
+        sql.FROM("experiment");
         applyWhere(sql, example, false);
-        
+
         if (example != null && example.getOrderByClause() != null) {
             sql.ORDER_BY(example.getOrderByClause());
         }
-        
+
         return sql.toString();
     }
 
     public String updateByExampleSelective(Map<String, Object> parameter) {
-        Compounds record = (Compounds) parameter.get("record");
-        CompoundsExample example = (CompoundsExample) parameter.get("example");
-        
+        Experiment record = (Experiment) parameter.get("record");
+        ExperimentExample example = (ExperimentExample) parameter.get("example");
+
         SQL sql = new SQL();
-        sql.UPDATE("compounds");
-        
-        if (record.getEnglishName() != null) {
-            sql.SET("english_name = #{record.englishName,jdbcType=VARCHAR}");
+        sql.UPDATE("experiment");
+
+        if (record.getId() != null) {
+            sql.SET("id = #{record.id,jdbcType=INTEGER}");
         }
-        
-        if (record.getChineseName() != null) {
-            sql.SET("chinese_name = #{record.chineseName,jdbcType=VARCHAR}");
+
+        if (record.getName() != null) {
+            sql.SET("name = #{record.name,jdbcType=VARCHAR}");
         }
-        
-        if (record.getTypes() != null) {
-            sql.SET("types = #{record.types,jdbcType=VARCHAR}");
+
+        if (record.getTestId() != null) {
+            sql.SET("test_id = #{record.testId,jdbcType=VARCHAR}");
         }
-        
+
+        if (record.getValue() != null) {
+            sql.SET("value = #{record.value,jdbcType=VARCHAR}");
+        }
+
         applyWhere(sql, example, true);
         return sql.toString();
     }
 
     public String updateByExample(Map<String, Object> parameter) {
         SQL sql = new SQL();
-        sql.UPDATE("compounds");
-        
-        sql.SET("english_name = #{record.englishName,jdbcType=VARCHAR}");
-        sql.SET("chinese_name = #{record.chineseName,jdbcType=VARCHAR}");
-        sql.SET("types = #{record.types,jdbcType=VARCHAR}");
-        
-        CompoundsExample example = (CompoundsExample) parameter.get("example");
+        sql.UPDATE("experiment");
+
+        sql.SET("id = #{record.id,jdbcType=INTEGER}");
+        sql.SET("name = #{record.name,jdbcType=VARCHAR}");
+        sql.SET("test_id = #{record.testId,jdbcType=VARCHAR}");
+        sql.SET("value = #{record.value,jdbcType=VARCHAR}");
+
+        ExperimentExample example = (ExperimentExample) parameter.get("example");
         applyWhere(sql, example, true);
         return sql.toString();
     }
 
-    protected void applyWhere(SQL sql, CompoundsExample example, boolean includeExamplePhrase) {
+    public String updateByPrimaryKeySelective(Experiment record) {
+        SQL sql = new SQL();
+        sql.UPDATE("experiment");
+
+        if (record.getName() != null) {
+            sql.SET("name = #{name,jdbcType=VARCHAR}");
+        }
+
+        if (record.getTestId() != null) {
+            sql.SET("test_id = #{testId,jdbcType=VARCHAR}");
+        }
+
+        if (record.getValue() != null) {
+            sql.SET("value = #{value,jdbcType=VARCHAR}");
+        }
+
+        sql.WHERE("id = #{id,jdbcType=INTEGER}");
+
+        return sql.toString();
+    }
+
+    protected void applyWhere(SQL sql, ExperimentExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }
-        
+
         String parmPhrase1;
         String parmPhrase1_th;
         String parmPhrase2;
@@ -132,7 +166,7 @@ public class CompoundsSqlProvider {
             parmPhrase3 = "#{oredCriteria[%d].allCriteria[%d].value[%d]}";
             parmPhrase3_th = "#{oredCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}";
         }
-        
+
         StringBuilder sb = new StringBuilder();
         List<Criteria> oredCriteria = example.getOredCriteria();
         boolean firstCriteria = true;
@@ -144,7 +178,7 @@ public class CompoundsSqlProvider {
                 } else {
                     sb.append(" or ");
                 }
-                
+
                 sb.append('(');
                 List<Criterion> criterions = criteria.getAllCriteria();
                 boolean firstCriterion = true;
@@ -155,14 +189,14 @@ public class CompoundsSqlProvider {
                     } else {
                         sb.append(" and ");
                     }
-                    
+
                     if (criterion.isNoValue()) {
                         sb.append(criterion.getCondition());
                     } else if (criterion.isSingleValue()) {
                         if (criterion.getTypeHandler() == null) {
                             sb.append(String.format(parmPhrase1, criterion.getCondition(), i, j));
                         } else {
-                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j,criterion.getTypeHandler()));
+                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j, criterion.getTypeHandler()));
                         }
                     } else if (criterion.isBetweenValue()) {
                         if (criterion.getTypeHandler() == null) {
@@ -193,7 +227,7 @@ public class CompoundsSqlProvider {
                 sb.append(')');
             }
         }
-        
+
         if (sb.length() > 0) {
             sql.WHERE(sb.toString());
         }

@@ -1,14 +1,16 @@
 /**
- * FileName: CompoundsController
+ * FileName: ExperimentController
  * Author:   jason
- * Date:     2020/5/30 0:20
+ * Date:     2020/6/10 20:17
  * Description:
  */
 package com.yzcz.server.controller;
 
 
 import com.yzcz.server.model.Compounds;
+import com.yzcz.server.model.Experiment;
 import com.yzcz.server.service.CompoundsService;
+import com.yzcz.server.service.ExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +19,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/compounds")
-public class CompoundsController {
+@RequestMapping(value = "/experiment")
+public class ExperimentController {
 
     @Autowired
-    private CompoundsService service;
+    private ExperimentService service;
 
     @GetMapping("/getItems")
     public ResponseEntity<String> getItems(
@@ -37,31 +39,30 @@ public class CompoundsController {
     }
 
     @DeleteMapping("/del")
-    public ResponseEntity<String> del(@RequestBody(required = false) Compounds c){
-        System.out.println(c);
-        service.del(c);
+    public ResponseEntity<String> del(@RequestBody(required = false) Experiment e){
+        System.out.println(e);
+        service.del(e);
         return new ResponseEntity<>("true", HttpStatus.OK);
     }
 
     @PutMapping("/save")
-    public ResponseEntity<String> save(@RequestBody(required = false) Compounds[] cs){
+    public ResponseEntity<String> save(@RequestBody(required = false) Experiment[] es){
 
-        if (cs == null || cs.length != 2){
+        if (es == null || es.length != 2){
             return new ResponseEntity<>("false", HttpStatus.OK);
         }
-        service.save(cs[0], cs[1]);
+        service.save(es[0], es[1]);
 
         return new ResponseEntity<>("true", HttpStatus.OK);
 
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> add(@RequestBody(required = false) Compounds comp){
-        Assert.notNull(comp, "Addition must be not null!");
-        service.add(comp);
+    public ResponseEntity<String> add(@RequestBody(required = false) Experiment e){
+        Assert.notNull(e, "Addition must be not null!");
+        service.add(e);
         return new ResponseEntity<>("true", HttpStatus.OK);
 
     }
-
 
 }

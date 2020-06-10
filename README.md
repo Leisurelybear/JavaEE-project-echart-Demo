@@ -56,11 +56,21 @@ X 直接操作
 1. 首先导入sql文件
     - 四张表：Sql文件名就是表名
 
-2. 配置上文提到的**application.yml**为自己的数据库信息（url的?前的那个单词是数据库名，记得改）
+2. 配置上文提到的**application.yml**为自己的数据库信息（url，username，root都需要配置）
 
 3. 运行Java程序：**JavaEE-project\server\src\main\java\com\yzcz\server\ServerApplication.java**
+   ![start-0](./img/start-0.png)
+   <br/>**如果没有这个选项，或者这个java类不能运行，可以参考下面的流程**：
+   
+   1. 首先点击项目右侧gradle，然后发现目录树中只有一个main，点击+号 
+      ![start-1](./img/start-1.png)
+   2. 窗口中选中当前项目-server模块-build.gradle，点击OK
+      ![start-2](./img/start-2.png)
+   3. 稍等一会儿下载完，再运行ServerApplication
+      ![start-3](./img/start-3.png)
+
     
-4. 在上文提到的client中，用浏览器打开项目中的**barchart.html**文件，如果前面运行正常，那么数据就会从数据库取出来，展示到html页面中
+4. 在上文提到的client中，用浏览器打开项目中的**index.html**文件，如果前面运行正常，那么数据就会从数据库取出来，展示到html页面中
 
 
 
