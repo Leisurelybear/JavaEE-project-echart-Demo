@@ -604,7 +604,6 @@
             "<td>" +
             "<button type='button' class='btn btn-flat btn-outline-warning mb-3' onclick='addItem()'>添加</button>" +
             "<button type='button' class='btn btn-flat btn-outline-secondary mb-3' onclick='showData(page, num, )'>取消</button>" +
-
             "</td>"
         "</tr>"
         tmp = document.getElementById("tb_01").innerHTML
@@ -620,6 +619,10 @@
             "chineseName":$("#cname").val(),
             "englishName":$("#ename").val(),
             "types":$("#tp").val(),
+        }
+        if (comp.chineseName == "" || comp.englishName == "" || comp.types == ""){
+            alert("编辑框内容不能为空！")
+            return
         }
 
         $.ajax({
@@ -724,9 +727,15 @@
             "englishName": en_name,
             "types": types
         }
+
+        if (newJson.chineseName == "" || newJson.englishName == "" || newJson.types == ""){
+            alert("编辑框内容不能为空！")
+            return
+        }
+
         json = [
                 oldJson, newJson
-            ]
+        ]
 
 
         console.log(json)
