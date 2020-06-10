@@ -46,4 +46,9 @@ public class CompoundsService {
                 .andTypesEqualTo(oldComp.getTypes());
         dao.updateByExampleSelective(newComp, example);
     }
+
+    public void add(Compounds comp) {
+        dao.insert(comp);
+
+    }
 }

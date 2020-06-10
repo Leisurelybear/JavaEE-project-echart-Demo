@@ -12,6 +12,7 @@ import com.yzcz.server.service.CompoundsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -50,6 +51,14 @@ public class CompoundsController {
         }
         service.save(cs[0], cs[1]);
 
+        return new ResponseEntity<>("true", HttpStatus.OK);
+
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> save(@RequestBody(required = false) Compounds comp){
+        Assert.notNull(comp, "Addition must be not null!");
+        service.add(comp);
         return new ResponseEntity<>("true", HttpStatus.OK);
 
     }

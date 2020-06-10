@@ -598,11 +598,13 @@
 
         str = "<tr>" +
             "<td></td>" +
-            "<td><input type='text' id='cname' name='cname' value=''></td>" +
-            "<td><input type='text' id='ename' name='ename' value=''></td>" +
-            "<td><input type='text' id='tp' name='tp' value=''></td>" +
+            "<td><input class='form-control' type='text' id='cname' name='cname' value=''></td>" +
+            "<td><input class='form-control' type='text' id='ename' name='ename' value=''></td>" +
+            "<td><input class='form-control' type='text' id='tp' name='tp' value=''></td>" +
             "<td>" +
-            "<button type='button' class='btn btn-flat btn-outline-success mb-3' onclick='add()'>添加</button>" +
+            "<button type='button' class='btn btn-flat btn-outline-warning mb-3' onclick='addItem()'>添加</button>" +
+            "<button type='button' class='btn btn-flat btn-outline-secondary mb-3' onclick='showData(page, num, )'>取消</button>" +
+
             "</td>"
         "</tr>"
         tmp = document.getElementById("tb_01").innerHTML
@@ -610,6 +612,34 @@
         $("#tb_01").empty()
         $("#tb_01").append(str)
         $("#tb_01").append(tmp)
+    }
+
+    function addItem() {
+
+        comp = {
+            "chineseName":$("#cname").val(),
+            "englishName":$("#ename").val(),
+            "types":$("#tp").val(),
+        }
+
+        $.ajax({
+            url: "http://localhost:8080/compounds/add",
+            dataType: "text",
+            data: JSON.stringify(comp),
+            type: "post",
+            contentType: "application/json",
+            async: false,
+            statusCode: {
+                200: function (data) {
+                    console.log(data)
+                    currentObject = null
+                    isEditing = false
+                }
+            }
+        })
+        showData(page, num, like)
+
+
     }
 
     function showData(page, num, like) {
@@ -668,10 +698,12 @@
 
         tds = tr.childNodes
 
-        tds[1].innerHTML = "<input type='text' id='ch_name' name='ch_name' value='" + tds[1].innerText + "'>"
-        tds[2].innerHTML = "<input type='text' id='en_name' name='en_name' value='" + tds[2].innerText + "'>"
-        tds[3].innerHTML = "<input type='text' id='types' name='types' value='" + tds[3].innerText + "'>"
-        tds[4].innerHTML = "<button type='button' class='btn btn-flat btn-outline-secondary mb-3' onclick='save()'>保存</button>"
+        tds[1].innerHTML = "<input class='form-control' type='text' id='ch_name' name='ch_name' value='" + tds[1].innerText + "'>"
+        tds[2].innerHTML = "<input class='form-control' type='text' id='en_name' name='en_name' value='" + tds[2].innerText + "'>"
+        tds[3].innerHTML = "<input class='form-control' type='text' id='types' name='types' value='" + tds[3].innerText + "'>"
+        tds[4].innerHTML = "<button type='button' class='btn btn-flat btn-outline-warning mb-3' onclick='save()'>保存</button>" +
+            "<button type='button' class='btn btn-flat btn-outline-secondary mb-3' onclick='showData(page, num, like)'>取消</button>"
+
 
 
     }
