@@ -588,12 +588,12 @@
 
     function addItem() {
 
-        experiment = {
+        comp = {
             "chineseName":$("#cname").val(),
             "englishName":$("#ename").val(),
             "types":$("#tp").val(),
         }
-        if (experiment.chineseName == "" || experiment.englishName == "" || experiment.types == ""){
+        if (comp.chineseName == "" || comp.englishName == "" || comp.types == ""){
             alert("编辑框内容不能为空！")
             return
         }
@@ -601,7 +601,7 @@
         $.ajax({
             url: "http://localhost:8080/compounds/add",
             dataType: "text",
-            data: JSON.stringify(experiment),
+            data: JSON.stringify(comp),
             type: "post",
             contentType: "application/json",
             async: false,
@@ -673,7 +673,7 @@
             return
         }
         isEditing = true
-        currentObject = experiment
+        currentObject = comp
 
         tds = tr.childNodes
 
@@ -738,11 +738,11 @@
     }
 
 
-    function del(comp,) {
+    function del(comp) {
         $.ajax({
             url: "http://localhost:8080/compounds/del",
             dataType: "text json",
-            data: JSON.stringify(experiment),
+            data: JSON.stringify(comp),
             type: "delete",
             contentType: "application/json",
             async: false,
