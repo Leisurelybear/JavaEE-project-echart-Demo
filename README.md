@@ -1,5 +1,6 @@
 ## JavaEE 实践作业（建议使用idea来导入项目）
 
+This is a JavaEE project demo based on SSM.It show us how to use SpringBoot, MyBatis, echart directly and simply.If you are a beginner in SSM or just want to build a SSM project immediately, you can fork it and learn it. I think it can be useful to you.
 
 ### 
 * Spring ->简化开发-> [Spring boot]
@@ -8,18 +9,19 @@
 简化了servlet
 
 
-jsp：前后端不分离，java view resolver （数据 -> html片段）
-本项目：前后端分离（
-    java 后端 查询 处理 数据
-    -> json
-    -> 前端
-    -> js来展示数据，而不是html
-）
+前端技术：<br/>
+jsp：前后端不分离，java view resolver （数据 -> html片段）<br/>
+本项目：前后端分离（<br/>
+    java 后端 查询 处理 数据<br/>
+    -> json<br/>
+    -> 前端<br/>
+    -> js来动态生成展示的数据，而不是使用后端传来的html<br/>
+）<br/><br/>
 
-数据库：
-X hibernate：
-X 直接操作
-√ MyBatis 操作数据库的orm框架 来操作数据库
+数据库操作ORM框架：<br/>
+X hibernate<br/>
+X 直接操作<br/>
+√ MyBatis 操作数据库的orm框架 来操作数据库<br/>
 
 
 
@@ -35,7 +37,6 @@ X 直接操作
 
 ### 三、后端程序
 * 位置：**JavaEE-project/server/src/main/java/com/yzcz/server**
-* 命名yzcz为 杨赵曹张 的首字母缩写
 * 项目使用了SpringBoot框架，数据库访问使用了MyBatis
     - **controller**: 控制器层，主要是处理url请求[Get/Post/Put/Delete]
     - **mapper**: DAO层，与数据库操作有关
